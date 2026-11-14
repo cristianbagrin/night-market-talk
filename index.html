@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>夜市對話 Night Market Talk</title>
+<meta name="description" content="Two AI models act out a conversation at a Taiwan night-market stall in Taiwanese Mandarin, with pinyin, English and voices. Built on Pollinations.">
+<meta property="og:title" content="夜市對話 Night Market Talk">
+<meta property="og:description" content="Two AIs haggle, order and fail to say goodbye at a Taiwan night market, in Taiwanese Mandarin with pinyin, English and voices.">
+<meta property="og:image" content="https://night-market-talk.pollinations.app/screenshot.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23160d26'/><text x='16' y='23' font-size='19' text-anchor='middle' fill='%23ff5a4e'>夜</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@pollinations/ui@0.1.0-alpha.20/dist/connect.js"></script>
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<div class="led" aria-hidden="true"><div class="led-track"><span>士林夜市 · 蚵仔煎 80 元 · 珍珠奶茶 · 半糖少冰 · 雞排要切嗎？要辣嗎？ · 臭豆腐 · 芒果冰 · 老闆，算便宜一點啦！ · </span><span>士林夜市 · 蚵仔煎 80 元 · 珍珠奶茶 · 半糖少冰 · 雞排要切嗎？要辣嗎？ · 臭豆腐 · 芒果冰 · 老闆，算便宜一點啦！ · </span></div></div>
+
+<header class="top">
+  <div class="title">
+    <h1><span class="zh-title">夜市對話</span><span class="en-title">Night Market Talk</span></h1>
+    <p class="lede">Two AI models act out a conversation at a Taiwan night-market stall, in Taiwanese Mandarin, with pinyin, English and voices. You set the scene, they talk, and you can step in.</p>
+  </div>
+  <div class="connect"><polli-connect app-key="APP_KEY_PLACEHOLDER" budget="5" expiry="30" permissions="profile"></polli-connect></div>
+</header>
+
+<main>
+  <form class="sheet" id="setup" aria-label="Set the scene">
+    <p class="sheet-head"><span>點餐單</span><span class="sheet-en">Set the scene: tick one in each row</span></p>
+    <fieldset><legend><span>攤位</span>Stall</legend><div class="opts" id="opt-stall"></div></fieldset>
+    <fieldset><legend><span>客人</span>Customer</legend><div class="opts" id="opt-customer"></div></fieldset>
+    <fieldset><legend><span>情境</span>Situation</legend><div class="opts" id="opt-goal"></div></fieldset>
+    <fieldset><legend><span>程度</span>Level</legend><div class="opts" id="opt-level"></div></fieldset>
+    <fieldset class="models"><legend><span>模型</span>Models</legend>
+      <label>Vendor <select id="model-vendor"></select></label>
+      <label>Customer <select id="model-customer"></select></label>
+    </fieldset>
+    <div class="sheet-foot">
+      <label class="check"><input type="checkbox" id="opt-voice" checked> Read lines aloud</label>
+      <label class="check"><input type="checkbox" id="opt-hide-en"> Hide English until tapped</label>
+      <button type="submit" id="start">開始 Start</button>
+    </div>
+    <p class="hint" id="hint">Connect with Pollinations (top right) to run your own scenes. Each conversation costs a few thousandths of a Pollen, paid from your own balance.</p>
+  </form>
+
+  <section class="stage" aria-live="polite">
+    <div class="stage-head">
+      <h2 id="scene-title">Sample: 蚵仔煎, haggling</h2>
+      <button type="button" id="stop" class="ghost" hidden>Stop</button>
+    </div>
+    <ol class="script" id="script"></ol>
+    <form class="stepin" id="stepin" hidden>
+      <label for="note"><span>旁白</span> Step in: something happens</label>
+      <div class="stepin-row">
+        <input id="note" maxlength="80" placeholder="突然下雨了 · Your friend arrives · 老闆的手機響了" autocomplete="off">
+        <button type="submit">Add</button>
+      </div>
+    </form>
+    <div class="receipt" id="receipt" hidden>
+      <p class="receipt-head">收據 · Words from this conversation</p>
+      <ul id="words"></ul>
+      <button type="button" id="copy-words" class="ghost dark">Copy for Anki</button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Voices are mainland-accented (no Taiwan voice is available yet); the words and vocabulary are Taiwanese. AI lines can be wrong, so check anything you plan to memorise.</p>
+  <p>Made with <a href="https://pollinations.ai/?ref=night-market-talk">pollinations.ai</a> · <a href="https://github.com/cristianbagrin/night-market-talk">Source</a></p>
+</footer>
+</body>
+</html>

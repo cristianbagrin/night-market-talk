@@ -1,0 +1,15 @@
+{
+  "name": "night-market-talk",
+  "private": true,
+  "type": "module",
+  "description": "Two AI models talk at a Taiwan night-market stall in Taiwanese Mandarin. Built on Pollinations.",
+  "license": "MIT",
+  "scripts": {
+    "demo": "node tools/make-demo.mjs",
+    "t2s": "node tools/make-t2s.mjs"
+  },
+  "devDependencies": {
+    "opencc-js": "^1.0.5",
+    "pinyin-pro": "^3.26.0"
+  }
+}

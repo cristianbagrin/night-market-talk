@@ -1,0 +1,137 @@
+{
+ "title": "Sample: 蚵仔煎 · 殺價 Haggle · Beginner",
+ "lines": [
+  {
+   "who": "customer",
+   "name": "馬克",
+   "model": "GLM 5.3 Flash",
+   "zh": "阿姨您好！我要兩份蚵仔煎，可以嗎？",
+   "pinyin": "ā yí nín hǎo! wǒ yào liǎng fèn é zǎi jiān, kě yǐ ma?",
+   "en": "Hello, auntie! I'd like two oyster omelets, is that okay?",
+   "audio": "demo/0.mp3"
+  },
+  {
+   "who": "vendor",
+   "name": "阿美姨",
+   "model": "MiniMax M3.1 Flash",
+   "zh": "可以喔，帥哥！兩份的話，我算你便宜一點。",
+   "pinyin": "kě yǐ o, shuài gē! liǎng fèn de huà, wǒ suàn nǐ pián yi yì diǎn.",
+   "en": "Of course, handsome! Since it's two plates, I'll give you a small discount.",
+   "audio": "demo/1.mp3"
+  },
+  {
+   "who": "customer",
+   "name": "馬克",
+   "model": "GLM 5.3 Flash",
+   "zh": "真的嗎？太好了！謝謝阿姨，您人真好喔！",
+   "pinyin": "zhēn de ma? tài hǎo le! xiè xiè ā yí, nín rén zhēn hǎo o!",
+   "en": "Really? That's great! Thank you, auntie, you're so nice!",
+   "audio": "demo/2.mp3"
+  },
+  {
+   "who": "vendor",
+   "name": "阿美姨",
+   "model": "MiniMax M3.1 Flash",
+   "zh": "不客氣啦！我的甜酸醬很好吃喔。要加辣醬嗎？",
+   "pinyin": "bú kè qì la! wǒ de tián suān jiàng hěn hǎo chī o. yào jiā là jiàng ma?",
+   "en": "You're welcome! My sweet-and-sour sauce is really good. Do you want spicy sauce?",
+   "audio": "demo/3.mp3"
+  },
+  {
+   "who": "customer",
+   "name": "馬克",
+   "model": "GLM 5.3 Flash",
+   "zh": "好啊！一份加辣，一份不用，謝謝喔！",
+   "pinyin": "hǎo a! yí fèn jiā là, yí fèn bú yòng, xiè xiè o!",
+   "en": "Sure! One with chili sauce, one without, thanks!",
+   "audio": "demo/4.mp3"
+  },
+  {
+   "who": "vendor",
+   "name": "阿美姨",
+   "model": "MiniMax M3.1 Flash",
+   "zh": "好喔！一份辣、一份不辣，對吧？帥哥稍等一下喔，馬上就好！",
+   "pinyin": "hǎo o! yí fèn là, yí fèn bú là, duì ba? shuài gē shāo děng yí xià o, mǎ shàng jiù hǎo!",
+   "en": "Okay! One spicy, one not spicy, right? Handsome guy, wait a moment, it'll be ready soon!",
+   "audio": "demo/5.mp3"
+  },
+  {
+   "who": "customer",
+   "name": "馬克",
+   "model": "GLM 5.3 Flash",
+   "zh": "對對，沒錯喔！請問總共多少錢呢？",
+   "pinyin": "duì duì, méi cuò o! qǐng wèn zǒng gòng duō shǎo qián ne?",
+   "en": "Yes, that's right! How much is it altogether?",
+   "audio": "demo/6.mp3"
+  },
+  {
+   "who": "vendor",
+   "name": "阿美姨",
+   "model": "MiniMax M3.1 Flash",
+   "zh": "兩份原本160塊啦！因為你買兩份，我便宜10塊，150喔！",
+   "pinyin": "liǎng fèn yuán běn 160 kuài la! yīn wèi nǐ mǎi liǎng fèn, wǒ pián yi 10 kuài, 150 o!",
+   "en": "Two plates are 160, but since you buy two, I take off 10 — 150 total!",
+   "audio": "demo/7.mp3"
+  },
+  {
+   "who": "customer",
+   "name": "馬克",
+   "model": "GLM 5.3 Flash",
+   "zh": "150塊，好便宜喔！錢在這裡，謝謝阿姨，再見！",
+   "pinyin": "150 kuài, hǎo pián yi o! qián zài zhè lǐ, xiè xiè ā yí, zài jiàn!",
+   "en": "150 dollars, what a great deal! Here's the money, thank you auntie, goodbye!",
+   "audio": "demo/8.mp3"
+  },
+  {
+   "who": "vendor",
+   "name": "阿美姨",
+   "model": "MiniMax M3.1 Flash",
+   "zh": "謝謝帥哥！慢走喔，下次再來吃喔！",
+   "pinyin": "xiè xiè shuài gē! màn zǒu o, xià cì zài lái chī o!",
+   "en": "Thank you, handsome! Take care, and come back again!",
+   "audio": "demo/9.mp3"
+  }
+ ],
+ "words": [
+  {
+   "zh": "蚵仔煎",
+   "en": "oyster omelet (Taiwanese street food)",
+   "pinyin": "é zǎi jiān"
+  },
+  {
+   "zh": "甜酸醬",
+   "en": "sweet-and-sour sauce",
+   "pinyin": "tián suān jiàng"
+  },
+  {
+   "zh": "加辣",
+   "en": "to add spicy sauce",
+   "pinyin": "jiā là"
+  },
+  {
+   "zh": "不辣",
+   "en": "not spicy",
+   "pinyin": "bú là"
+  },
+  {
+   "zh": "便宜",
+   "en": "cheaper / discounted",
+   "pinyin": "pián yi"
+  },
+  {
+   "zh": "總共",
+   "en": "in total (sum)",
+   "pinyin": "zǒng gòng"
+  },
+  {
+   "zh": "多少錢",
+   "en": "how much does it cost",
+   "pinyin": "duō shǎo qián"
+  },
+  {
+   "zh": "慢走",
+   "en": "take care (said when leaving)",
+   "pinyin": "màn zǒu"
+  }
+ ]
+}
