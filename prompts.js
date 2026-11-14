@@ -4,6 +4,7 @@ export const STALLS = [
   {
     id: "oyster",
     dish: "蚵仔煎",
+    price: 80,
     dishEn: "Oyster omelette",
     vendor: "阿美姨",
     vendorEn: "Auntie Mei",
@@ -14,6 +15,7 @@ export const STALLS = [
   {
     id: "tea",
     dish: "珍珠奶茶",
+    price: 60,
     dishEn: "Bubble tea",
     vendor: "阿傑",
     vendorEn: "Jay",
@@ -24,6 +26,7 @@ export const STALLS = [
   {
     id: "chicken",
     dish: "炸雞排",
+    price: 90,
     dishEn: "Fried chicken cutlet",
     vendor: "大胖哥",
     vendorEn: "Big Brother Pang",
@@ -34,6 +37,7 @@ export const STALLS = [
   {
     id: "tofu",
     dish: "臭豆腐",
+    price: 70,
     dishEn: "Stinky tofu",
     vendor: "阿伯",
     vendorEn: "Uncle Chen",
@@ -44,6 +48,7 @@ export const STALLS = [
   {
     id: "mango",
     dish: "芒果冰",
+    price: 150,
     dishEn: "Mango shaved ice",
     vendor: "小芳",
     vendorEn: "Fang",
@@ -58,6 +63,7 @@ export const CUSTOMERS = [
     id: "student",
     name: "小安",
     nameEn: "An, a local student",
+    short: "local student",
     voice: "shimmer",
     altVoice: "nova",
     persona: "You are 小安, 20, a university student in Taipei, out with friends and short on money. Casual, a bit cheeky, very Taiwanese in how you talk.",
@@ -66,6 +72,7 @@ export const CUSTOMERS = [
     id: "newcomer",
     name: "馬克",
     nameEn: "Mark, new in Taiwan",
+    short: "new in Taiwan",
     voice: "echo",
     altVoice: "onyx",
     persona:

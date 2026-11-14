@@ -20,22 +20,26 @@ let running = false;
 let stopRequested = false;
 let history = [];
 
-/* ---------- setup sheet ---------- */
-function radios(container, name, items, labelFn, checkedId) {
-  container.innerHTML = items
-    .map(
-      (it) => `<label><input type="radio" name="${name}" value="${it.id}"${it.id === checkedId ? " checked" : ""}><span>${labelFn(it)}</span></label>`
-    )
-    .join("");
-}
-radios($("#opt-stall"), "stall", STALLS, (s) => `<b>${s.dish}</b>${s.dishEn}`, "oyster");
-radios($("#opt-customer"), "customer", CUSTOMERS, (c) => `<b>${c.name}</b>${c.nameEn}`, "newcomer");
-radios($("#opt-goal"), "goal", GOALS, (g) => `<b>${g.label}</b>${g.en}`, "deal");
-radios($("#opt-level"), "level", LEVELS, (l) => `<b>${l.label}</b>${l.en}`, "a2");
-for (const [sel, def] of [["#model-vendor", MODELS[0].id], ["#model-customer", MODELS[1].id]]) {
-  $(sel).innerHTML = MODELS.map((m) => `<option value="${m.id}"${m.id === def ? " selected" : ""}>${m.label}</option>`).join("");
-}
-const picked = (name, list) => list.find((x) => x.id === document.querySelector(`input[name=${name}]:checked`).value);
+/* ---------- setup ---------- */
+// Stalls as POP price cards; the rest as a sentence with plain selects.
+// One fluorescent stock, as on a real stall; only the tilt varies.
+const CARD = [["var(--acid)", "-1.2deg"], ["var(--acid)", "1.2deg"]];
+$("#opt-stall").innerHTML = STALLS.map((st, i) => {
+  const [c, r] = CARD[i % CARD.length];
+  return `<label><input type="radio" name="stall" value="${st.id}"${st.id === "oyster" ? " checked" : ""}>
+    <span class="pop" style="--c:${c};--r:${r}"><span class="dish" lang="zh-Hant-TW">${st.dish}</span><span class="dish-en">${st.dishEn}</span><span class="price">${st.price}<small>元</small></span></span></label>`;
+}).join("");
+const options = (sel, items, labelFn, def) =>
+  ($(sel).innerHTML = items.map((it) => `<option value="${it.id}"${it.id === def ? " selected" : ""}>${labelFn(it)}</option>`).join(""));
+options("#opt-customer", CUSTOMERS, (c) => `${c.name}, ${c.short}`, "newcomer");
+options("#opt-goal", GOALS, (g) => `${g.label} · ${g.en.toLowerCase()}`, "deal");
+options("#opt-level", LEVELS, (l) => `${l.label} · ${l.en.toLowerCase()}`, "a2");
+options("#model-vendor", MODELS, (m) => m.label, MODELS[0].id);
+options("#model-customer", MODELS, (m) => m.label, MODELS[1].id);
+const picked = (name, list) => {
+  const el = document.querySelector(`select[name=${name}]`) || document.querySelector(`input[name=${name}]:checked`);
+  return list.find((x) => x.id === el.value);
+};
 
 $("#opt-hide-en").addEventListener("change", (e) => script.classList.toggle("hide-en", e.target.checked));
 script.addEventListener("click", (e) => {
@@ -45,7 +49,6 @@ script.addEventListener("click", (e) => {
 /* ---------- connect ---------- */
 function syncKey() {
   apiKey = connect?.apiKey || null;
-  startBtn.textContent = apiKey ? "開始 Start" : "Connect to start";
   $("#hint").hidden = !!apiKey;
 }
 connect?.addEventListener("change", syncKey);
@@ -62,7 +65,7 @@ function lineEl({ who, name, model, zh, pinyin, en }) {
     li.innerHTML = `<div class="who">旁白</div><p class="zh">${esc(zh)}</p>`;
     return li;
   }
-  li.innerHTML = `<div class="who">${esc(name)}<small>${esc(model)}</small></div>
+  li.innerHTML = `<div class="who"><span class="tag" lang="zh-Hant-TW">${esc(name)}</span><small>${esc(model)}</small></div>
     <div><p class="zh" lang="zh-Hant-TW">${esc(zh)}</p><p class="py">${esc(pinyin)}</p><p class="en">${esc(en)}</p></div>
     <button type="button" class="play" aria-label="Play this line">${PLAY_ICON}</button>`;
   return li;
@@ -71,7 +74,7 @@ function lineEl({ who, name, model, zh, pinyin, en }) {
 function typingEl(who, name) {
   const li = document.createElement("li");
   li.className = `line ${who} typing`;
-  li.innerHTML = `<div class="who">${esc(name)}</div><div><p class="zh"><span class="dots">thinking</span></p></div>`;
+  li.innerHTML = `<div class="who"><span class="tag">${esc(name)}</span></div><div><p class="zh"><span class="dots">thinking</span></p></div>`;
   return li;
 }
 
@@ -257,6 +260,7 @@ $("#setup").addEventListener("submit", (e) => {
   if (running) return;
   if (!apiKey) {
     $("#hint").hidden = false;
+    $("#hint").classList.add("nudge");
     connect?.scrollIntoView({ behavior: "smooth", block: "center" });
     connect?.querySelector("button")?.focus();
     return;
