@@ -1,5 +1,5 @@
 // Runs the two-AI conversation. Works in the browser and in Node 22+.
-import { buildMessages, buildWordList, parseLine, TTS_MODEL } from "./prompts.js";
+import { buildMessages, buildWordList, parseLine, TTS_MODEL, forSpeech } from "./prompts.js";
 
 const API = "https://gen.pollinations.ai";
 export const MAX_LINES = 12;
@@ -8,9 +8,13 @@ export const MAX_LINES = 12;
 let toPinyin = () => "";
 export const setPinyin = (fn) => (toPinyin = fn);
 
+// A call that hangs upstream is abandoned after this long and retried.
+const TIMEOUT_MS = 45000;
+
 async function chat(key, model, messages) {
   const res = await fetch(`${API}/v1/chat/completions`, {
     method: "POST",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({ model, messages, response_format: { type: "json_object" }, max_tokens: 1500 }),
   });
@@ -25,7 +29,8 @@ async function chat(key, model, messages) {
 
 export async function nextLine(key, model, ctx) {
   let lastErr;
-  for (let attempt = 0; attempt < 2; attempt++) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt) await new Promise((r) => setTimeout(r, 800 * attempt));
     try {
       const line = parseLine(await chat(key, model, buildMessages(ctx)));
       return { ...line, pinyin: toPinyin(line.zh) };
@@ -46,17 +51,20 @@ export async function wordList(key, model, history) {
 export async function speak(key, text, voice) {
   const res = await fetch(`${API}/v1/audio/speech`, {
     method: "POST",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: TTS_MODEL, input: text, voice }),
+    body: JSON.stringify({ model: TTS_MODEL, input: forSpeech(text), voice, response_format: "mp3" }),
   });
   if (!res.ok) throw new Error(`${res.status} ${(await res.text()).slice(0, 200)}`);
   return res.blob();
 }
 
 // Decides whether the conversation is over after `lines` (spoken lines only).
-export function isOver(lines) {
+// In the can't-say-goodbye scene nobody gets to leave: it runs to the line limit.
+export function isOver(lines, goal) {
   const n = lines.length;
   if (n >= MAX_LINES) return true;
+  if (goal?.endless) return false;
   if (n < 2) return false;
   return lines[n - 2].end; // the other side said goodbye and this one has answered
 }

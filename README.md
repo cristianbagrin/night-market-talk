@@ -12,10 +12,10 @@ It's built for people learning Mandarin in Taiwan: Traditional characters, Taiwa
 
 ## How it uses Pollinations
 
-- **Two text models talk to each other.** Each turn goes to `POST /v1/chat/completions` with the role's own persona. The vendor and the customer can be different models (MiniMax, GLM, DeepSeek, Kimi, GPT), chosen on the page.
-- **Voices.** Each line is read aloud with `microsoft/mai-voice-2.1-flash` through `POST /v1/audio/speech`, with a different voice for each character.
+- **Two text models talk to each other.** Each turn goes to `POST /v1/chat/completions` with the role's own persona. The vendor and the customer can be different models (MiniMax, GLM, Grok, GPT, Mistral), chosen on the page.
+- **Voices.** Each line is read aloud with `openai/tts-1-hd` through `POST /v1/audio/speech`, with a different voice for each character. I picked it by having each candidate voice read test lines and transcribing them back: TTS-HD got about 96% of characters right; the Microsoft Mandarin voices got about 78% and paused for seconds at punctuation.
 - **Word list.** One last call picks the eight most useful words from the conversation.
-- **Users pay with their own Pollen.** The page uses [Pollinations Connect](https://github.com/pollinations/pollinations/blob/main/BRING_YOUR_OWN_POLLEN.md) (`<polli-connect>`), so visitors sign in and spend their own balance. A whole conversation with voices costs a few thousandths of a Pollen. The app holds no key.
+- **Users pay with their own Pollen.** The page uses [Pollinations Connect](https://github.com/pollinations/pollinations/blob/main/BRING_YOUR_OWN_POLLEN.md) (`<polli-connect>`), so visitors sign in and spend their own balance. A whole conversation with voices costs about a hundredth of a Pollen. The app holds no key.
 
 The pinyin doesn't come from the model, because models get tones wrong. It comes from a dictionary ([pinyin-pro](https://github.com/zh-lx/pinyin-pro)): the text is mapped to Simplified for the lookup (a character map built from [OpenCC](https://github.com/BYVoid/OpenCC)), then Taiwan readings (蚵 é, 垃圾 lè sè) and spoken particles (喔 o, 啦 la, 欸 ēi) are fixed on top.
 
@@ -34,7 +34,7 @@ No build step: it's static files. To run it locally, serve the folder (`python3 
 
 ## Notes
 
-- The voices have a mainland accent, because no Taiwan Mandarin voice is available yet. The words and vocabulary are Taiwanese.
+- No Taiwan Mandarin voice is available yet, so the accent isn't Taiwanese. The words and vocabulary are.
 - The lines are written by AI and can be wrong. Check anything you plan to memorise.
 
 MIT licence.

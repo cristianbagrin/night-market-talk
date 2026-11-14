@@ -1,4 +1,4 @@
-import { STALLS, CUSTOMERS, GOALS, LEVELS, MODELS } from "./prompts.js";
+import { STALLS, CUSTOMERS, GOALS, LEVELS, MODELS, customerVoice } from "./prompts.js";
 import { nextLine, wordList, speak, isOver, setPinyin } from "./engine.js";
 import { makePinyin } from "./pinyin.js";
 
@@ -19,7 +19,6 @@ let apiKey = null;
 let running = false;
 let stopRequested = false;
 let history = [];
-let currentAudio = null;
 
 /* ---------- setup sheet ---------- */
 function radios(container, name, items, labelFn, checkedId) {
@@ -76,29 +75,52 @@ function typingEl(who, name) {
   return li;
 }
 
+// One shared player. Safari only lets audio play after a network wait if the element
+// was first played during a tap, so Start "unlocks" it with a moment of silence.
+const player = new Audio();
+let finishCurrent = null;
+let unlocked = false;
+
+function silentWav() {
+  const n = 800, v = new DataView(new ArrayBuffer(44 + n));
+  const str = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  str(0, "RIFF"); v.setUint32(4, 36 + n, true); str(8, "WAVEfmt "); v.setUint32(16, 16, true);
+  v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, 8000, true); v.setUint32(28, 8000, true);
+  v.setUint16(32, 1, true); v.setUint16(34, 8, true); str(36, "data"); v.setUint32(40, n, true);
+  for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
+  return URL.createObjectURL(new Blob([v], { type: "audio/wav" }));
+}
+
+function unlockAudio() {
+  if (unlocked) return;
+  unlocked = true;
+  player.src = silentWav();
+  player.play().catch(() => {});
+}
+
 function stopAudio() {
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.dispatchEvent(new Event("ended"));
-  }
+  player.pause();
+  finishCurrent?.();
 }
 
 function playSource(btn, src) {
   stopAudio();
   return new Promise((resolve) => {
-    const a = new Audio(src);
-    currentAudio = a;
-    btn.classList.add("playing");
-    btn.innerHTML = STOP_ICON;
     const done = () => {
+      if (finishCurrent !== done) return;
+      finishCurrent = null;
+      player.onended = player.onerror = null;
       btn.classList.remove("playing");
       btn.innerHTML = PLAY_ICON;
-      if (currentAudio === a) currentAudio = null;
       resolve();
     };
-    a.addEventListener("ended", done, { once: true });
-    a.addEventListener("error", done, { once: true });
-    a.play().catch(done);
+    finishCurrent = done;
+    btn.classList.add("playing");
+    btn.innerHTML = STOP_ICON;
+    player.onended = done;
+    player.onerror = done;
+    player.src = src;
+    player.play().catch(done);
   });
 }
 
@@ -188,9 +210,9 @@ async function run() {
   let lastAudio = Promise.resolve();
   let who = "customer";
   try {
-    while (!stopRequested && !isOver(spoken)) {
+    while (!stopRequested && !isOver(spoken, goal)) {
       const name = who === "vendor" ? stall.vendor : customer.name;
-      const voice = who === "vendor" ? stall.voice : customer.voice;
+      const voice = who === "vendor" ? stall.voice : customerVoice(stall, customer);
       const typing = typingEl(who, name);
       script.append(typing);
       const line = await nextLine(apiKey, models[who], { role: who, stall, customer, goal, level, history });
@@ -239,6 +261,7 @@ $("#setup").addEventListener("submit", (e) => {
     connect?.querySelector("button")?.focus();
     return;
   }
+  unlockAudio();
   run();
 });
 stopBtn.addEventListener("click", () => {
