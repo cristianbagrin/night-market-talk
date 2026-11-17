@@ -2,7 +2,7 @@
 
 [![Made with pollinations.ai](https://raw.githubusercontent.com/pollinations/pollinations/123ed07456106a4f752c0a22c584e8cadd2db6a8/packages/ui/src/brand/badge-made-with.svg)](https://pollinations.ai/?ref=badge)
 
-Two AI models act out a conversation at a Taiwan night-market stall, in Taiwanese Mandarin, with pinyin, English and voices.
+Two AI models act out a conversation at a Taiwan night-market stall, in Taiwanese Chinese, with pinyin, English and voices.
 
 **Live:** https://night-market-talk.pollinations.app
 
@@ -34,7 +34,7 @@ No build step: it's static files. To run it locally, serve the folder (`python3 
 
 ## Notes
 
-- No Taiwan Mandarin voice is available yet, so the accent isn't Taiwanese. The words and vocabulary are.
+- No Taiwanese Chinese voice is available yet, so the accent isn't Taiwanese. The words and vocabulary are.
 - The lines are written by AI and can be wrong. Check anything you plan to memorise.
 
 MIT licence.

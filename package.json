@@ -2,7 +2,7 @@
   "name": "night-market-talk",
   "private": true,
   "type": "module",
-  "description": "Two AI models talk at a Taiwan night-market stall in Taiwanese Mandarin. Built on Pollinations.",
+  "description": "Two AI models talk at a Taiwan night-market stall in Taiwanese Chinese. Built on Pollinations.",
   "license": "MIT",
   "scripts": {
     "demo": "node tools/make-demo.mjs",

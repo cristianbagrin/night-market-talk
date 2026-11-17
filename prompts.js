@@ -98,7 +98,7 @@ export const GOALS = [
 export const LEVELS = [
   { id: "a2", label: "初級", en: "Beginner", brief: "a beginner learner (TOCFL A2): short sentences, everyday words, no idioms" },
   { id: "b1", label: "中級", en: "Intermediate", brief: "an intermediate learner (TOCFL B1): natural sentences, common night-market expressions" },
-  { id: "b2", label: "高級", en: "Advanced", brief: "an advanced learner (TOCFL B2): fast, natural Taiwan Mandarin with everyday slang and particles" },
+  { id: "b2", label: "高級", en: "Advanced", brief: "an advanced learner (TOCFL B2): fast, natural Taiwanese Chinese with everyday slang and particles" },
 ];
 
 export const MODELS = [
@@ -157,7 +157,7 @@ export function buildWordList(history) {
     {
       role: "system",
       content:
-        'You make vocabulary lists for learners of Taiwanese Mandarin. Pick the 8 most useful words or set phrases from the conversation (skip names and the most basic words like 你、我、好). Reply with JSON only: {"words": [{"zh": Traditional Chinese, "en": short English gloss}]}.',
+        'You make vocabulary lists for learners of Taiwanese Chinese. Pick the 8 most useful words or set phrases from the conversation (skip names and the most basic words like 你、我、好). Reply with JSON only: {"words": [{"zh": Traditional Chinese, "en": short English gloss}]}.',
     },
     { role: "user", content: text },
   ];
